@@ -1,16 +1,37 @@
-# React + Vite
+# CommitVault - Frontend Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the user interface for **CommitVault**, a conceptual banking application dashboard. It connects directly to a Node.js/MySQL backend to visualize advanced database operations in a clean, modern, and responsive UI.
 
-Currently, two official plugins are available:
+## 🛠️ Tech Stack
+* **Framework:** React.js (via Vite)
+* **Styling:** Tailwind CSS
+* **Icons:** Lucide React (SVG/Inline implementations)
+* **HTTP Client:** Axios
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
+* **Dynamic User Context:** Instantly switch between customer profiles via a global dropdown to simulate multi-tenant data fetching.
+* **Real-Time Portfolio Tracking:** Displays aggregate balances securely calculated on the server using MySQL Database Views.
+* **Smart Transfer Logic:** Dynamic "From Account" selectors that fetch active accounts specific to the currently logged-in user.
+* **Secure Fund Transfers:** Interactive form that triggers ACID-compliant Stored Procedures on the backend.
+* **Transaction History:** Real-time ledger updates reflecting database triggers and relational data joins.
 
-## React Compiler
+## 🚀 Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
+* Node.js installed on your machine.
+* The [CommitVault Backend](https://github.com/pallavithegod/CommitVault-Backend) must be running concurrently on port `5000` for the dashboard to fetch real data.
 
-## Expanding the ESLint configuration
+### Setup Instructions
+1. Clone this repository to your local machine.
+2. Navigate into the project directory and install the necessary dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Vite development server:
+   ```bash
+   npm run dev
+   ```
+4. Open your web browser and navigate to the local URL provided by Vite (typically `http://localhost:5173`).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+*Built for the Engineering DBMS Project presentation.*
