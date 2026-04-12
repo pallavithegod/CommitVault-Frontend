@@ -1,37 +1,51 @@
-# CommitVault - Frontend Dashboard
+# CommitVault — Frontend Dashboard
 
-This is the user interface for **CommitVault**, a conceptual banking application dashboard. It connects directly to a Node.js/MySQL backend to visualize advanced database operations in a clean, modern, and responsive UI.
+A conceptual banking interface that connects directly to a `Node.js / MySQL` backend — built to showcase advanced SQL concepts: views, stored procedures, triggers, and transactional integrity.
 
-## 🛠️ Tech Stack
-* **Framework:** React.js (via Vite)
-* **Styling:** Tailwind CSS
-* **Icons:** Lucide React (SVG/Inline implementations)
-* **HTTP Client:** Axios
-
-## ✨ Features
-* **Dynamic User Context:** Instantly switch between customer profiles via a global dropdown to simulate multi-tenant data fetching.
-* **Real-Time Portfolio Tracking:** Displays aggregate balances securely calculated on the server using MySQL Database Views.
-* **Smart Transfer Logic:** Dynamic "From Account" selectors that fetch active accounts specific to the currently logged-in user.
-* **Secure Fund Transfers:** Interactive form that triggers ACID-compliant Stored Procedures on the backend.
-* **Transaction History:** Real-time ledger updates reflecting database triggers and relational data joins.
-
-## 🚀 Getting Started
-
-### Prerequisites
-* Node.js installed on your machine.
-* The [CommitVault Backend](https://github.com/pallavithegod/CommitVault-Backend) must be running concurrently on port `5000` for the dashboard to fetch real data.
-
-### Setup Instructions
-1. Clone this repository to your local machine.
-2. Navigate into the project directory and install the necessary dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the Vite development server:
-   ```bash
-   npm run dev
-   ```
-4. Open your web browser and navigate to the local URL provided by Vite (typically `http://localhost:5173`).
+![React](https://img.shields.io/badge/React-Vite-20232A?style=flat-square&logo=react)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
 
 ---
-*Built for the Engineering DBMS Project presentation.*
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | React.js |
+| Bundler | Vite |
+| Styling | Tailwind CSS |
+| Icons | Lucide React |
+| HTTP Client | Axios |
+
+---
+
+## Features & SQL Concepts
+
+| SQL Concept | Implementation |
+|---|---|
+| **`VIEW`** | Portfolio balances are aggregated server-side — secure, pre-computed, never exposed as raw table data. |
+| **`STORED PROCEDURE`** | Fund transfers invoke `CALL transfer_funds()` on the backend — atomic, reusable logic with built-in validation. |
+| **`TRANSACTION`** | Every debit-credit pair is wrapped in a transaction block, guaranteeing full commit or full rollback — no partial states. |
+| **`AFTER INSERT TRIGGER`** | The transaction ledger reflects live trigger writes — the UI updates in real time without manual refresh logic. |
+| **`JOIN`** | Transaction history is assembled via multi-table joins, pulling user, account, and ledger data into a single normalized response. |
+| **Dynamic Context** | A global profile switcher simulates multi-tenant data fetching — each user context re-queries filtered account records. |
+
+---
+
+## Getting Started
+
+**Prerequisites:** Node.js installed. The [CommitVault Backend](https://github.com/pallavithegod/CommitVault-Backend) must be running on port `5000`.
+
+```bash
+# 1. Clone and install
+git clone <repo-url>
+npm install
+
+# 2. Start the dev server
+npm run dev
+```
+
+Open `http://localhost:5173` in your browser.
+
+---
