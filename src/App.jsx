@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ShieldCheck, Send, History, Wallet, Bell, Loader2, UserCircle } from 'lucide-react';
 
 export default function App() {
+  const API_URL = import.meta.env.VITE_API_URL;
   // --- STATE MANAGEMENT ---
   const [data, setData] = useState({ summary: null, transactions: [] });
   const [loading, setLoading] = useState(true);
@@ -17,20 +18,9 @@ export default function App() {
   const [transferAmount, setTransferAmount] = useState('');
   const [receiverId, setReceiverId] = useState('');
 
-
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:5000/api/dashboard/${CUSTOMER_ID}`);
-  //     setData(response.data);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
-
   // 1. Fetch ALL customers on load
 useEffect(() => {
-  axios.get('http://localhost:5000/api/customers')
+  axios.get(`${API_URL}/api/customers`)
     .then(res => setCustomers(res.data))
     .catch(err => console.error(err));
 }, []);
@@ -40,12 +30,12 @@ useEffect(() => {
   setLoading(true);
   
   // Fetch Dashboard Stats
-  axios.get(`http://localhost:5000/api/dashboard/${currentCustomerId}`)
+  axios.get(`${API_URL}/api/dashboard/${currentCustomerId}`)
     .then(res => setData(res.data))
     .catch(err => console.error(err));
   
   // Fetch specific accounts for the Transfer Dropdown
-  axios.get(`http://localhost:5000/api/accounts/${currentCustomerId}`)
+  axios.get(`${API_URL}/api/accounts/${currentCustomerId}`)
     .then(res => {
       setAccounts(res.data);
       // Auto-select their first account
@@ -63,7 +53,7 @@ useEffect(() => {
     if (!senderAccountId) return alert("Select an account to send from.");
     
     try {
-      await axios.post('http://localhost:5000/api/transfer', {
+      await axios.post('${API_URL}/api/transfer', {
         senderAccountId: parseInt(senderAccountId),
         receiverAccountId: parseInt(receiverId),
         amount: parseFloat(transferAmount)
@@ -72,7 +62,7 @@ useEffect(() => {
       setTransferAmount('');
       setReceiverId('');
       
-      const dashResponse = await axios.get(`http://localhost:5000/api/dashboard/${currentCustomerId}`);
+      const dashResponse = await axios.get(`${API_URL}/api/dashboard/${currentCustomerId}`);
       setData(dashResponse.data);
       
     } catch (error) {
