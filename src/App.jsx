@@ -53,7 +53,7 @@ useEffect(() => {
     if (!senderAccountId) return alert("Select an account to send from.");
     
     try {
-      await axios.post('${API_URL}/api/transfer', {
+      await axios.post(`${API_URL}/api/transfer`, {
         senderAccountId: parseInt(senderAccountId),
         receiverAccountId: parseInt(receiverId),
         amount: parseFloat(transferAmount)
@@ -93,7 +93,7 @@ useEffect(() => {
           >
             {customers.map(customer => (
               <option key={customer.customer_id} value={customer.customer_id}>
-                {customer.name}
+                {customer.first_name} {customer.last_name}
               </option>
             ))}
           </select>
