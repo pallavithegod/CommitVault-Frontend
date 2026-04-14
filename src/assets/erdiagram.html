@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CommitVault — ER Diagram</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f9fafb;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 48px 24px;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 2rem 2rem 1.5rem;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .card-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #6b7280;
+    }
+
+    .legend {
+      display: flex;
+      gap: 18px;
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      color: #6b7280;
+      flex-wrap: wrap;
+    }
+
+    .leg-item { display: flex; align-items: center; gap: 6px; }
+    .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .pk { color: #dc2626; font-weight: 500; }
+    .fk { color: #2563eb; font-weight: 500; }
+
+    #er-diagram svg { width: 100% !important; height: auto !important; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">CommitVault &mdash; Entity Relationship Diagram</span>
+      <div class="legend">
+        <span class="leg-item"><span class="leg-dot" style="background:#065f46"></span>Core tables</span>
+        <span class="leg-item"><span class="leg-dot" style="background:#374151"></span>System table</span>
+        <span class="leg-item"><span class="pk">PK</span> Primary key</span>
+        <span class="leg-item"><span class="fk">FK</span> Foreign key</span>
+        <span class="leg-item">||--o{&nbsp; One-to-many</span>
+      </div>
+    </div>
+    <div id="er-diagram"></div>
+  </div>
+
+  <script type="module">
+    import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+    await document.fonts.ready;
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'base',
+      fontFamily: '"DM Mono", monospace',
+      themeVariables: {
+        darkMode: false,
+        fontSize: '13px',
+        fontFamily: '"DM Mono", monospace',
+        lineColor: '#9ca3af',
+        textColor: '#1f2937',
+        primaryColor: '#f0fdf4',
+        primaryBorderColor: '#065f46',
+        primaryTextColor: '#065f46',
+        secondaryColor: '#f9fafb',
+        secondaryBorderColor: '#d1d5db',
+        secondaryTextColor: '#374151',
+        attributeBackgroundColorEven: '#f0fdf4',
+        attributeBackgroundColorOdd: '#ffffff',
+      },
+    });
+
+    const diagram = `erDiagram
+  CUSTOMERS {
+    INT customer_id PK
+    VARCHAR first_name
+    VARCHAR last_name
+    VARCHAR email
+    VARCHAR phone_number
+    ENUM kyc_status
+  }
+  ACCOUNTS {
+    INT account_id PK
+    INT customer_id FK
+    ENUM account_type
+    DECIMAL balance
+    ENUM status
+  }
+  TRANSACTIONS {
+    VARCHAR transaction_id PK
+    INT account_id FK
+    ENUM type
+    DECIMAL amount
+    DATETIME timestamp
+  }
+  AUDIT_LOGS {
+    INT log_id PK
+    VARCHAR action_type
+    VARCHAR table_affected
+    TEXT details
+    TIMESTAMP timestamp
+  }
+  CUSTOMERS ||--o{ ACCOUNTS : "owns"
+  ACCOUNTS ||--o{ TRANSACTIONS : "records"
+  ACCOUNTS ||--o{ AUDIT_LOGS : "triggers"
+`;
+
+    const { svg } = await mermaid.render('er-svg', diagram);
+    document.getElementById('er-diagram').innerHTML = svg;
+
+    document.querySelectorAll('#er-diagram svg text').forEach(t => {
+      t.style.fontFamily = '"DM Mono", monospace';
+    });
+    document.querySelectorAll('#er-diagram .er.entityBox').forEach(el => {
+      el.setAttribute('rx', '8');
+      el.setAttribute('ry', '8');
+    });
+  </script>
+</body>
+</html>
