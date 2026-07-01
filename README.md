@@ -33,7 +33,7 @@ A conceptual banking interface that connects directly to a `Node.js / MySQL` bac
 
 ---
 
-## Getting Started
+## Getting Started 
 
 **Prerequisites:** Node.js installed. The [CommitVault Backend](https://github.com/pallavithegod/CommitVault-Backend) must be running on port `5000`.
 
